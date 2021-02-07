@@ -20,7 +20,8 @@ if __name__ == "__main__":
     load_dotenv()
     feature_cogs = (
         ConfigCog(),
-        WelcomeCog()
+        WelcomeCog(),
+        SelfRoleCog(YB_BOT),
     )
     for cog in feature_cogs:
         YB_BOT.add_cog(cog)
