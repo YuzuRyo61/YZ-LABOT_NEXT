@@ -1,0 +1,87 @@
+jp:
+  error:
+    invoke_message: "%{mention} 申し訳ありません。YZ-LABOT内部でエラーが発生しました。"
+    invoke_dm_title: "YZ-LABOTで内部エラーが発生しました。"
+    check_forbidden: "%{mention} このコマンドを実行する権限がありません。"
+    unknown_command: "%{mention} 不明なコマンドです。"
+    dm_only: "%{mention} このコマンドはDM内でのみ実行できます。"
+  command:
+    add_guild:
+      brief: "YZ-LABOTをサーバーに追加するためのURLを発行します。"
+      description: "YZ-LABOTをサーバーに追加するためのURLを発行します。DM内・アプリ所有者のみ実行できます。"
+      please_dm: "ギルド追加のURL発行はDMで実行してください。"
+    config:
+      brief: "システム設定をまとめたコマンドです。"
+      description: "YZ-LABOTのシステム設定をまとめたコマンドです。以下サブコマンドから操作をしてください。"
+      unknown_subcommand: "%{mention} サブコマンドが不明です。\nサブコマンドは`%{command}`を参照してください。"
+      _welcome:
+        brief: "ガイドライン同意のための設定を行います。"
+        description: "ガイドライン同意のための設定を行います。"
+        _set_channel:
+          brief: "ウェルカムチャンネルを指定します。"
+          description: "ウェルカムチャンネルとして使用するチャンネルを指定します。"
+          success: "%{channel} をウェルカムチャンネルとして設定しました。"
+        _set_role:
+          brief: "ガイドライン同意時に付与するロールを指定します。"
+          description: "ガイドライン同意時に付与するロールを指定します。"
+          success: "%{role} を付与ロールとして設定しました。"
+        _set_notify_channel:
+          brief: "メンバー参加・脱退を知らせるチャンネルを指定します。"
+          description: "メンバー参加・脱退を知らせるチャンネルを指定します。この設定は任意です。"
+          success: "%{channel} をメンバー通知チャンネルとして設定しました。"
+        _remove_notify_channel:
+          brief: "メンバー参加・脱退を知らせるチャンネルの設定を削除します。"
+          description: "メンバー参加・脱退を知らせるチャンネルの設定を削除します。"
+          success: "メンバー通知チャンネルの設定を削除しました。"
+        _apply:
+          brief: "ウェルカムチャンネルのメッセージを送出します。"
+          description: "設定したチャンネルに同意をするためのウェルカムメッセージを送信します。"
+          err_no_data: "%{mention} ウェルカムチャンネルまたは付与ロールが設定されていません。"
+          err_unknown_ch: "%{mention} 指定したチャンネルが見つかりません。"
+          done: "適用が完了しました。"
+  cog:
+    config:
+      name: "システム設定"
+      description: "YZ-LABOTのシステム設定をします。"
+    welcome:
+      joined: "%{user} がYZ-LABOに加入しました。"
+      left: "%{user} がYZ-LABOから脱退しました。"
+      audit:
+        agreed: "該当ユーザーがガイドラインに同意しました"
+  text:
+    welcome: |-
+      YZ-LABOへようこそ。
+
+      YZ-LABOを使用するにあたり以下のルールを守るようにしてください。
+
+      ガイドラインはこちらになります。必ずご確認ください。
+      https://yz-labo.yuzulia.com/term.html
+
+      【ガイドライン要約】
+
+      1. Discordの利用規約・ガイドラインに反さないでください。
+
+      2. 利用者及び運営者等の誹謗中傷や、スパム連投をしてはいけません。
+
+      3. Discordの利用規約に則り、**13歳以上の利用に限らせていただきます。**
+
+      以上のガイドラインを守れない場合は、キックもしくはBAN処理ができるものとします。
+
+      同意する場合は👍のリアクションをしてください。
+
+      同意しない場合、サーバーを脱退してください。
+    welcome_dm: |-
+      YZ-LABOへようこそ。
+
+      YZ-LABOで使い方に困った場合は以下のドキュメントや、YZ-LABO内のmanualチャンネルをご覧ください。
+
+      https://docs.yz-labo.yuzulia.com/
+
+      informationチャンネルではYZ-LABOに関する大切なお知らせを発信いたしますので、通知をオンにしていただけると幸いです。
+
+      "ロール付与所"にアクセスすると、好きなカテゴリのロールを付与することができ、好きなカテゴリの話題に参加することができます。
+
+      ドキュメントを見ても不明な点がございましたら"質問箱"をご利用ください。
+      また、YZ-LABOでこれを追加してほしいというご要望等がございましたら、意見箱にお寄せください。
+
+      それでは、YZ-LABOをお楽しみくださいませ。
