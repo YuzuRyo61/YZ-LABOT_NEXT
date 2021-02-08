@@ -8,7 +8,7 @@ from pydantic import ValidationError
 
 from yzlabot import i18n_setup
 from yzlabot.database import YBDatabase, Query
-from yzlabot.models import Config, SelfRole
+from yzlabot.models import Config, SelfRole, VoiceRoom
 
 i18n_setup()
 
@@ -19,6 +19,7 @@ CONFIG_WELCOME_MESSAGE_ID = "welcome_message_id"
 CONFIG_MEMBER_NOTIFY_ID = "member_notify_id"
 CONFIG_ROLE_TABLE = "self_role"
 CONFIG_SELF_ROLE_CHANNEL_ID = "self_role_channel_id"
+CONFIG_VOICE_ROOM_TABLE = "voice_room"
 
 
 class ConfigCog(commands.Cog, name=i18n.t("cog.config.name")):
@@ -364,6 +365,10 @@ class ConfigCog(commands.Cog, name=i18n.t("cog.config.name")):
 
         await ctx.send(i18n.t("command.config._self_role._apply.success"))
 
+    # ==============
+    # Emoji role
+    # ==============
+
     @config.group(
         name="emoji_role",
         brief=i18n.t("command.config._emoji_role.brief"),
@@ -402,7 +407,8 @@ class ConfigCog(commands.Cog, name=i18n.t("cog.config.name")):
 
     @config_emoji_role.command(
         name="view",
-        brief=i18n.t("command.config._emoji_role.brief")
+        brief=i18n.t("command.config._emoji_role.brief"),
+        description=i18n.t("command.config._emoji_role.description")
     )
     async def config_emoji_role_view(
             self,
@@ -428,3 +434,123 @@ class ConfigCog(commands.Cog, name=i18n.t("cog.config.name")):
 
         await ctx.send(i18n.t("command.config._emoji_role._view.response",
                               roles=available_roles, emoji=str(emoji)))
+
+    # ==============
+    # voice room role
+    # ==============
+
+    @config.group(
+        name="voice_room",
+        brief=i18n.t("command.config._voice_room.brief"),
+        description=i18n.t("command.config._voice_room.description")
+    )
+    async def config_voice_room(self, ctx: commands.Context):
+        if ctx.invoked_subcommand is None:
+            await ctx.send(
+                i18n.t("command.config.unknown_subcommand",
+                       mention=ctx.message.author.mention,
+                       command="!help config voice_room"))
+
+    @config_voice_room.command(
+        name="add",
+        brief=i18n.t("command.config._voice_room._add.brief"),
+        description=i18n.t("command.config._voice_room._add.description")
+    )
+    async def config_voice_room_add(
+            self,
+            ctx: commands.Context,
+            voice_channel: discord.VoiceChannel,
+            assign_role: discord.Role,
+            text_channel: Optional[discord.TextChannel] = None):
+        with YBDatabase(ctx.guild.id) as db:
+            q = Query()
+            vrt = db.table(CONFIG_VOICE_ROOM_TABLE)
+            cfg_vr = VoiceRoom(
+                assign_role_id=assign_role.id,
+                voice_channel_id=voice_channel.id,
+                text_channel_id=text_channel.id if
+                text_channel is not None else None
+            )
+            # noinspection PyTypeChecker
+            vrt.upsert(
+                cfg_vr.dict(),
+                q.voice_channel_id == voice_channel.id
+            )
+
+        if text_channel is not None:
+            await ctx.send(i18n.t(
+                "command.config._voice_room._add.success",
+                role=assign_role.name,
+                voice_channel=voice_channel.name,
+                text_channel=text_channel.mention))
+        else:
+            await ctx.send(i18n.t(
+                "command.config._voice_room._add.success_wo_text_ch",
+                role=assign_role.name,
+                voice_channel=voice_channel.mention))
+
+    @config_voice_room.command(
+        name="list",
+        brief=i18n.t("command.config._voice_room._list.brief"),
+        description=i18n.t("command.config._voice_room._list.description")
+    )
+    async def config_voice_room_list(self, ctx: commands.Context):
+        with YBDatabase(ctx.guild.id) as db:
+            vrt = db.table(CONFIG_VOICE_ROOM_TABLE)
+            vr_list: List[VoiceRoom] = []
+            for vrr in vrt.all():
+                vr_list.append(VoiceRoom(**vrr))
+
+        if len(vr_list) > 0:
+            await ctx.send(i18n.t("command.config._voice_room._list.list"))
+            text_list = ""
+            for vr in vr_list:
+                role = ctx.guild.get_role(vr.assign_role_id)
+                if role is None:
+                    role = i18n.t("command.config._voice_room._list.unknown")
+                vc = ctx.guild.get_channel(vr.voice_channel_id)
+                if vc is None:
+                    vc = i18n.t("command.config._voice_room._list.unknown")
+                if vr.text_channel_id is not None:
+                    tc = ctx.guild.get_channel(vr.text_channel_id)
+                    if tc is None:
+                        tc = i18n.t(
+                            "command.config._voice_room._list.unknown")
+                else:
+                    tc = None
+
+                if tc is not None:
+                    text_list += i18n.t(
+                        "command.config._voice_room._list.record",
+                        voice_channel=vc,
+                        role=role,
+                        text_channel=tc) + "\n"
+                else:
+                    text_list += i18n.t(
+                        "command.config._voice_room._list.record",
+                        voice_channel=vc,
+                        role=role,
+                        text_channel=i18n.t(
+                           "command.config._voice_room._list.no_setting"
+                        )) + "\n"
+
+            await ctx.send(f"```\n{text_list}\n```")
+        else:
+            await ctx.send(i18n.t("command.config._voice_room._list.no_list"))
+
+    @config_voice_room.command(
+        name="remove",
+        brief=i18n.t("command.config._voice_room._remove.brief"),
+        description=i18n.t("command.config._voice_room._remove.description")
+    )
+    async def config_voice_room_remove(
+            self,
+            ctx: commands.Context,
+            voice_channel: discord.VoiceChannel):
+        with YBDatabase(ctx.guild.id) as db:
+            q = Query()
+            vrt = db.table(CONFIG_VOICE_ROOM_TABLE)
+            # noinspection PyTypeChecker
+            vrt.remove(q.voice_channel_id == voice_channel.id)
+
+        await ctx.send(i18n.t("command.config._voice_room._remove.success"))

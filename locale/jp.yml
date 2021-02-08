@@ -75,10 +75,37 @@ jp:
           brief: "絵文字が使用できるロールを確認できます。"
           description: "絵文字が使用できるロールを確認できます。"
           response: |-
-            %{emoji} が利用できるロールは以下のとおりです。
+            %{emoji} が利用できるロールは以下の通りです。
             %{roles}
         audit:
           edited: "YZ-LABOTによるコマンドにより変更されました。(by %{name})"
+      _voice_room:
+        brief: "ボイスチャンネル参加時のロール付与設定を行います。"
+        description: "ボイスチャンネル参加時のロール付与設定を行います。"
+        _add:
+          brief: "ボイスルーム設定を追加します。"
+          description: "ボイスルーム設定を追加します。"
+          success: |-
+            設定を完了しました。
+            %{voice_channel} に参加したメンバーは %{role} を自動で付与します。
+            (全メンバー退出時に %{text_channel} のログをすべて削除します)
+          success_wo_text_ch: |-
+            設定を完了しました。
+            %{voice_channel} に参加したメンバーは %{role} を自動で付与します。
+        _list:
+          brief: "ボイスルーム設定一覧を表示します。"
+          description: "ボイスルーム設定一覧を表示します。"
+          list: |-
+            現在登録されているボイスルーム設定は以下の通りです。
+            凡例: `| ボイスチャンネル | 付与ロール | 自動削除するテキストチャンネル |`
+          no_list: "現在登録されているボイスルーム設定はありません。"
+          unknown: "(不明)"
+          no_setting: "(未設定)"
+          record: "| %{voice_channel} | %{role} | %{text_channel} |"
+        _remove:
+          brief: "ボイスルーム設定を削除します。"
+          description: "ボイスルーム設定を削除します。"
+          success: "ボイスルーム設定を削除しました。"
   cog:
     config:
       name: "システム設定"
@@ -88,6 +115,17 @@ jp:
       left: "%{user} がYZ-LABOから脱退しました。"
       audit:
         agreed: "該当ユーザーがガイドラインに同意しました"
+    invite_blocker:
+      blocked:
+        title: "招待リンクの貼り付けを検知"
+        description: |-
+          YZ-LABO内でのDiscordサーバー招待リンクの貼り付けは禁止しております。
+          ご了承下さい。
+    voice_room:
+      audit:
+        dc_or_changed: "ボイスチャットを切断、もしくは変更しました"
+        con_or_changed: "ボイスチャットに接続、もしくは変更しました"
+        dc_bot: "ボットのみのボイスチャットを切断しました"
   text:
     welcome: |-
       YZ-LABOへようこそ。
@@ -134,4 +172,4 @@ jp:
       ロール付与所について詳しく知りたい場合は以下のドキュメントをご覧ください。
       https://docs.yz-labo.yuzulia.com/role
 
-      YZ-LABOで付与できるロール一覧は以下のとおりです。
+      YZ-LABOで付与できるロール一覧は以下の通りです。

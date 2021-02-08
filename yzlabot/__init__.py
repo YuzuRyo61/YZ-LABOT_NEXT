@@ -92,7 +92,8 @@ async def on_command_error(ctx: commands.Context, error):
             try:
                 embed = discord.embeds.Embed(
                     title=i18n.t("error.invoke_dm_title"),
-                    description=f"```\n{error}\n```"
+                    description=f"```\n{error}\n```",
+                    color=discord.Colour.dark_purple()
                 )
                 await app_info.owner.send(embed=embed)
             except discord.Forbidden:
