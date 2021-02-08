@@ -1,5 +1,5 @@
 import logging
-from typing import Union, List
+from typing import Union, List, Optional
 
 import i18n
 import discord
@@ -363,3 +363,68 @@ class ConfigCog(commands.Cog, name=i18n.t("cog.config.name")):
                         await msg.add_reaction(reaction)
 
         await ctx.send(i18n.t("command.config._self_role._apply.success"))
+
+    @config.group(
+        name="emoji_role",
+        brief=i18n.t("command.config._emoji_role.brief"),
+        description=i18n.t("command.config._emoji_role.description")
+    )
+    async def config_emoji_role(self, ctx: commands.Context):
+        if ctx.invoked_subcommand is None:
+            await ctx.send(
+                i18n.t("command.config.unknown_subcommand",
+                       mention=ctx.message.author.mention,
+                       command="!help config emoji_role"))
+
+    @config_emoji_role.command(
+        name="set",
+        brief=i18n.t("command.config._emoji_role._set.brief"),
+        description=i18n.t("command.config._emoji_role._set.description")
+    )
+    async def config_emoji_role_set(
+            self,
+            ctx: commands.Context,
+            emoji: discord.Emoji,
+            *roles: discord.Role):
+        if ctx.guild != emoji.guild:
+            await ctx.send(
+                i18n.t("command.config._emoji_role.err_not_same_guild",
+                       mention=ctx.message.author.mention))
+            return
+        await emoji.edit(
+            roles=roles if len(roles) > 0 else None,
+            reason=i18n.t("command.config._emoji_role.audit.edited",
+                          name=ctx.message.author.display_name)
+        )
+        await ctx.send(
+            i18n.t("command.config._emoji_role.success",
+                   emoji=str(emoji)))
+
+    @config_emoji_role.command(
+        name="view",
+        brief=i18n.t("command.config._emoji_role.brief")
+    )
+    async def config_emoji_role_view(
+            self,
+            ctx: commands.Context,
+            emoji: Optional[discord.Emoji] = None):
+        if emoji is None:
+            await ctx.send(
+                i18n.t("command.config._emoji_role.err_unknown_emoji",
+                       mention=ctx.message.author.mention)
+            )
+            return
+        if ctx.guild != emoji.guild:
+            await ctx.send(
+                i18n.t("command.config._emoji_role.err_not_same_guild",
+                       mention=ctx.message.author.mention))
+            return
+
+        available_roles = "(everyone)"
+        for role in emoji.roles:
+            if available_roles == "(everyone)":
+                available_roles = ""
+            available_roles += f"{str(role)}, "
+
+        await ctx.send(i18n.t("command.config._emoji_role._view.response",
+                              roles=available_roles, emoji=str(emoji)))

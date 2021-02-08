@@ -8,6 +8,7 @@ from discord.ext import commands
 from .help import YLHelpCommand
 
 intents = discord.Intents.none()
+intents.emojis = True
 intents.guilds = True
 intents.members = True
 intents.voice_states = True

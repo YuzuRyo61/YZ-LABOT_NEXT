@@ -62,6 +62,23 @@ jp:
           err_no_channel: "%{mention} 付与可能ロールのチャンネルが設定されていません。"
           err_no_self_roles: "%{mention} 付与可能ロールが登録されていません。"
           success: "適用が完了しました。"
+      _emoji_role:
+        brief: "絵文字が使用できるロールを管理します。"
+        description: "指定した絵文字の利用できるロールを管理します。"
+        err_unknown_emoji: "%{mention} 不明な絵文字です。"
+        err_not_same_guild: "%{mention} 指定した絵文字は同じサーバーの絵文字ではありません。"
+        success: "%{emoji} の使用可能ロールを変更しました。"
+        _set:
+          brief: "絵文字が使用できるロールを変更できます。"
+          description: "絵文字が使用できるロールを変更できます。"
+        _view:
+          brief: "絵文字が使用できるロールを確認できます。"
+          description: "絵文字が使用できるロールを確認できます。"
+          response: |-
+            %{emoji} が利用できるロールは以下のとおりです。
+            %{roles}
+        audit:
+          edited: "YZ-LABOTによるコマンドにより変更されました。(by %{name})"
   cog:
     config:
       name: "システム設定"
