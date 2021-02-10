@@ -17,8 +17,8 @@ intents.reactions = True
 
 YB_BOT = commands.Bot(
     command_prefix=commands.when_mentioned_or("!"),
-    case_insensitive=True,
     help_command=YLHelpCommand(),
+    case_insensitive=True,
     activity=discord.Game("YZ-LABO BOT SYSTEM"),
     intents=intents
 )
