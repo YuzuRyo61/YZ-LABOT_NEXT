@@ -12,6 +12,7 @@ from .welcome import WelcomeCog
 from .self_role import SelfRoleCog
 from .invite_blocker import InviteBlockerCog
 from .voice_room import VoiceRoomCog
+from .user_info import UserInfoCog
 
 
 __all__ = [
@@ -20,6 +21,7 @@ __all__ = [
     "SelfRoleCog",
     "InviteBlockerCog",
     "VoiceRoomCog",
+    "UserInfoCog",
     "CONFIG_WELCOME_MESSAGE_ID",
     "CONFIG_WELCOME_CHANNEL_ID",
     "CONFIG_GENERAL_ROLE_ID",

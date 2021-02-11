@@ -38,13 +38,6 @@ class ConfigCog(commands.Cog, name=i18n.t("cog.config.name")):
                        mention=ctx.message.author.mention,
                        command="!help config"))
 
-    @config.error
-    async def config__error(self, ctx: commands.Context, error):
-        if isinstance(error, commands.CheckFailure):
-            await ctx.send(
-                i18n.t("error.check_forbidden",
-                       mention=ctx.message.author.mention))
-
     # ==============
     # Welcome
     # ==============

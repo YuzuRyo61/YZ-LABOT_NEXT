@@ -23,7 +23,8 @@ if __name__ == "__main__":
         WelcomeCog(),
         SelfRoleCog(YB_BOT),
         InviteBlockerCog(),
-        VoiceRoomCog()
+        VoiceRoomCog(),
+        UserInfoCog(YB_BOT),
     )
     for cog in feature_cogs:
         YB_BOT.add_cog(cog)
