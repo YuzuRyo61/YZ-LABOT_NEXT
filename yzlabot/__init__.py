@@ -37,6 +37,7 @@ def i18n_setup():
 
 i18n_setup()
 
+# noinspection SpellCheckingInspection
 RYTHM_CMD = {
     "play", "disconnect", "np", "aliases", "ping",
     "skip", "seek", "soundcloud", "remove", "loopqueue",
@@ -58,6 +59,7 @@ RYTHM_CMD = {
     "random", "st", "sad", "sc", "vol",
     "skip", "next", "s"
 }
+
 
 @YB_BOT.event
 async def on_ready():
