@@ -147,6 +147,9 @@ jp:
         dc_or_changed: "ボイスチャットを切断、もしくは変更しました"
         con_or_changed: "ボイスチャットに接続、もしくは変更しました"
         dc_bot: "ボットのみのボイスチャットを切断しました"
+    user_info:
+      name: "ユーザー情報"
+      description: "Discordのユーザー情報を取得します。"
   text:
     welcome: |-
       YZ-LABOへようこそ。
