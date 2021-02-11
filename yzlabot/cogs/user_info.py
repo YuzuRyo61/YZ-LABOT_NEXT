@@ -9,8 +9,8 @@ from yzlabot import i18n_setup
 i18n_setup()
 
 
-class UserInfoCog(commands.Cog, name=i18n.t("cog.config.user_info.name")):
-    __doc__ = i18n.t("cog.config.user_info.description")
+class UserInfoCog(commands.Cog, name=i18n.t("cog.user_info.name")):
+    __doc__ = i18n.t("cog.user_info.description")
 
     def __init__(self, bot: commands.Bot):
         self.bot = bot
