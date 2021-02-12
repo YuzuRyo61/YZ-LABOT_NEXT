@@ -125,7 +125,7 @@ jp:
         discriminator: "ディスクリミネータ(下4桁の数字)"
         registered: "登録日(UTC)"
         bot: "ボットユーザー"
-        joined_at: "サーバー参加日"
+        joined_at: "サーバー参加日(UTC)"
         nickname: "ニックネーム"
   cog:
     config:
