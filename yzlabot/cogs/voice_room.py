@@ -46,18 +46,18 @@ class VoiceRoomCog(commands.Cog):
                             reason=i18n.t("cog.voice_room.dc_bot")
                         )
 
-            if len(before.channel.members) == 0:
-                for cfg in vr_list:
-                    if before.channel.id == cfg.voice_channel_id:
-                        if cfg.text_channel_id is None:
-                            break
-                        channel = member.guild.get_channel(
-                            cfg.text_channel_id)
-                        if channel is not None:
-                            channel_length = len(
-                                await channel.history(limit=None).flatten())
-                            await channel.purge(limit=channel_length)
+        if before.channel is not None and len(before.channel.members) == 0:
+            for cfg in vr_list:
+                if before.channel.id == cfg.voice_channel_id:
+                    if cfg.text_channel_id is None:
                         break
+                    channel = member.guild.get_channel(
+                        cfg.text_channel_id)
+                    if channel is not None:
+                        channel_length = len(
+                            await channel.history(limit=None).flatten())
+                        await channel.purge(limit=channel_length)
+                    break
 
         # Ignore bot
         if member.bot:
