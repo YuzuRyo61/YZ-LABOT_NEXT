@@ -7,6 +7,7 @@ jp:
     dm_only: "%{mention} このコマンドはDM内でのみ実行できます。"
     missing_args: "%{mention} 必要な引数が足りません。必要な引数は`!help`をご確認ください。"
     not_valid_type: "%{mention} 引数が正しくありません。"
+    unknown_user: "%{mention} ユーザーが見つかりません。"
     rythm_hint:
       title: "Rythmのコマンドをお探しですか？"
       description: |-
@@ -116,17 +117,17 @@ jp:
     user_info:
       brief: "Discordのユーザー情報を取得します。"
       description: "Discordのユーザー情報を取得します。メンバー外のユーザーも取得できます。"
-      err_unknown_user: "%{mention} ユーザー情報を取得できません。"
-      embed:
-        title: "ユーザー情報"
-        description: "%{user} のユーザー情報です。"
-        user_id: "ユーザーID"
-        name: "ユーザー名"
-        discriminator: "ディスクリミネータ(下4桁の数字)"
-        registered: "登録日(UTC)"
-        bot: "ボットユーザー"
-        joined_at: "サーバー参加日(UTC)"
-        nickname: "ニックネーム"
+    ban:
+      brief: "このサーバーで指定したユーザーをBANします。"
+      description: "このサーバーで指定したユーザーをBANします。メンバー外のユーザーも指定できます。"
+      confirm_message: |-
+        %{mention}
+        【警告】
+        このユーザーをBANしようとしています。
+        問題がなければ %{confirm_reaction} をリアクションしてください。
+        キャンセルする場合はそのまま置いてください。
+      cancelled: "操作を取り消しました。"
+      banned: "ユーザーをBANしました。"
   cog:
     config:
       name: "システム設定"
@@ -147,9 +148,19 @@ jp:
         dc_or_changed: "ボイスチャットを切断、もしくは変更しました"
         con_or_changed: "ボイスチャットに接続、もしくは変更しました"
         dc_bot: "ボットのみのボイスチャットを切断しました"
-    user_info:
-      name: "ユーザー情報"
-      description: "Discordのユーザー情報を取得します。"
+    user_manage:
+      name: "ユーザー管理"
+      description: "サーバー上のDiscordユーザーを管理します。"
+      embed:
+        title: "ユーザー情報"
+        description: "%{user} のユーザー情報です。"
+        user_id: "ユーザーID"
+        name: "ユーザー名"
+        discriminator: "ディスクリミネータ(下4桁の数字)"
+        registered: "登録日(UTC)"
+        bot: "ボットユーザー"
+        joined_at: "サーバー参加日(UTC)"
+        nickname: "ニックネーム"
   text:
     welcome: |-
       YZ-LABOへようこそ。
