@@ -61,31 +61,3 @@ class WelcomeCog(commands.Cog):
                             i18n.t("text.welcome_dm"))
                     except discord.Forbidden:
                         pass
-
-    @commands.Cog.listener()
-    async def on_member_remove(self, member: discord.Member):
-        # Ignore bot account
-        if member.bot:
-            return
-
-        with YBDatabase(member.guild.id) as db:
-            q = Query()
-            gr_id = db.search(q.config_id == CONFIG_GENERAL_ROLE_ID)
-            nc_id = db.search(q.config_id == CONFIG_MEMBER_NOTIFY_ID)
-            if len(gr_id) == 0:
-                logging.warning("General role is not configured.")
-                return
-            cfg_gr = Config(**gr_id[0])
-            cfg_nc = Config(**nc_id[0]) if len(nc_id) > 0 else None
-
-        # if left user is assigned general role
-        if member.guild.get_role(int(cfg_gr.value)) in member.roles:
-            if cfg_nc is not None:
-                notify_channel = member.guild.get_channel(int(cfg_nc.value))
-                if notify_channel is not None:
-                    await notify_channel.send(i18n.t(
-                        "cog.welcome.left",
-                        user=member.mention
-                    ))
-                else:
-                    logging.error("Notify channel is not found.")
