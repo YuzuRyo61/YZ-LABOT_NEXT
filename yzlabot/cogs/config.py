@@ -452,7 +452,7 @@ class ConfigCog(commands.Cog, name=i18n.t("cog.config.name")):
     async def config_voice_room_add(
             self,
             ctx: commands.Context,
-            voice_channel: discord.VoiceChannel,
+            voice_channel: Union[discord.VoiceChannel, discord.StageChannel],
             assign_role: discord.Role,
             text_channel: Optional[discord.TextChannel] = None):
         with YBDatabase(ctx.guild.id) as db:

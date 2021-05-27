@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 
+# TODO: i18nに対応させる
+
 
 class YLHelpCommand(commands.DefaultHelpCommand):
     def __init__(self, **options):
